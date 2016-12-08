@@ -12,7 +12,7 @@
   },
   "scripts": {
     "build": "echo '#!/usr/bin/env node' > ./bin/index.js && babel --presets=es2015 index.js >> ./bin/index.js",
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "echo TBD",
     "watch": "babel index.js --watch index.js --out-dir bin"
   },
   "keywords": [
