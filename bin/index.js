@@ -48,7 +48,7 @@ if (!process.stdin.isTTY) {
     if (argv.keys) {
       console.log(JSON.stringify(Object.keys(obj), null, 2));
     } else if (argv.path) {
-      console.log(JSON.stringify(_jsonpath2.default.value(obj, argv._[0] || argv.path), null, 2));
+      console.log(JSON.stringify(_jsonpath2.default.query(obj, argv._[0] || argv.path), null, 2));
     } else {
       console.log(JSON.stringify(_lodash2.default.get(obj, argv._[0]), null, 2));
     }

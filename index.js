@@ -34,7 +34,7 @@ if (!process.stdin.isTTY) {
       if (argv.keys) {
         console.log(JSON.stringify(Object.keys(obj), null, 2))
       } else if (argv.path) {
-        console.log(JSON.stringify(jsonpath.value(obj, argv._[0] || argv.path), null, 2))
+        console.log(JSON.stringify(jsonpath.query(obj, argv._[0] || argv.path), null, 2))
       } else {
         console.log(JSON.stringify(_.get(obj, argv._[0]), null, 2))
       }
