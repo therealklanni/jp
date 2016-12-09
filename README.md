@@ -5,6 +5,10 @@
 Based on the idea behind [jq](https://github.com/stedolan/jq) without the need for compiling. 
 Supports [Lodash .get()](https://lodash.com/docs/4.17.2#get) and [JSONPath](https://github.com/dchester/jsonpath) syntax.
 
+```
+npm install -g jp-cli
+```
+
 ## Usage
 
 ```
