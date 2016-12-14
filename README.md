@@ -16,11 +16,17 @@ Pipe jp onto a JSON source from the commandline to parse the output:
   cat data.json | jp [options] [query]
 
 Options:
-  -k, --keys  print object keys instead of value                       [boolean]
-  -p, --path  use JSON Path notation (https://github.com/dchester/jsonpath)
-  --help      Show help                                                [boolean]
+  -p, --path      Use JSON Path notation (https://github.com/dchester/jsonpath)
+  -k, --keys      Print object keys only                               [boolean]
+  -i, --indent    Number of spaces for indentation (ignored by --human)
+                                                           [number] [default: 2]
+  -h, --human     Print human-readable (non-JSON) format               [boolean]
+  -b, --break     Set break length of object/array for human format     [number]
+  -c, --no-color  Disable color for human format                       [boolean]
+  -d, --depth     Depth for human format                                [number]
+  --help          Show help                                            [boolean]
 
-Queries are done using Lodash .get() method by default.
+Queries use the Lodash get method by default.
 For more information, see https://github.com/therealklanni/jp
 ```
 
