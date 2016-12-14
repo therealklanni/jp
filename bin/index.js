@@ -28,16 +28,57 @@ var _concatStream2 = _interopRequireDefault(_concatStream);
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var argv = _yargs2.default.usage('Pipe $0 onto a JSON source from the commandline to parse the output:\n  cat data.json | $0 [options] [query]').options({
-  k: {
-    alias: 'keys',
-    describe: 'print object keys instead of value',
-    type: 'boolean'
-  },
   p: {
     alias: 'path',
-    describe: 'use JSON Path notation (https://github.com/dchester/jsonpath)'
+    describe: 'Use JSON Path notation (https://github.com/dchester/jsonpath)'
+  },
+  k: {
+    alias: 'keys',
+    describe: 'Print object keys only',
+    type: 'boolean'
+  },
+  i: {
+    alias: 'indent',
+    describe: 'Number of spaces for indentation (ignored by --human)',
+    requiresArg: true,
+    default: 2,
+    type: 'number',
+    coerce: function coerce(x) {
+      return !isNaN(parseFloat(x)) && isFinite(x) ? +x : x;
+    }
+  },
+  h: {
+    alias: 'human',
+    describe: 'Print human-readable (non-JSON) format',
+    type: 'boolean'
+  },
+  b: {
+    alias: 'break',
+    describe: 'Set break length of object/array for human format',
+    requiresArg: true,
+    type: 'number'
+  },
+  c: {
+    alias: 'no-color',
+    describe: 'Disable color for human format',
+    type: 'boolean'
+  },
+  d: {
+    alias: 'depth',
+    describe: 'Depth for human format',
+    requiresArg: true,
+    type: 'number'
   }
-}).help().epilogue('Queries are done using Lodash .get() method by default.\nFor more information, see https://github.com/therealklanni/jp').argv;
+}).help().epilogue('Queries use the Lodash get method by default.\nFor more information, see https://github.com/therealklanni/jp').argv;
+
+var format = argv.human ? function (x) {
+  return x;
+} : _lodash2.default.partialRight(JSON.stringify, null, argv.indent || 2);
+var log = argv.human ? _lodash2.default.partialRight(console.dir.bind(console), {
+  colors: !argv.noColor,
+  breakLength: argv.break || null,
+  depth: argv.depth >= 0 ? argv.depth : null
+}) : console.log.bind(console);
 
 if (!process.stdin.isTTY) {
   process.stdin.pipe((0, _utf8Stream2.default)()).pipe((0, _mapStream2.default)(function (buf, cb) {
@@ -46,11 +87,11 @@ if (!process.stdin.isTTY) {
     var obj = JSON.parse(buf.toString());
 
     if (argv.keys) {
-      console.log(JSON.stringify(Object.keys(obj), null, 2));
+      log(format(Object.keys(obj)));
     } else if (argv.path) {
-      console.log(JSON.stringify(_jsonpath2.default.query(obj, argv._[0] || argv.path), null, 2));
+      log(format(_jsonpath2.default.query(obj, argv._[0] || argv.path)));
     } else {
-      console.log(JSON.stringify(_lodash2.default.get(obj, argv._[0]), null, 2));
+      log(format(_lodash2.default.get(obj, argv._[0])));
     }
   }));
 } else {
