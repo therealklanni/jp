@@ -25,9 +25,13 @@ var _concatStream = require('concat-stream');
 
 var _concatStream2 = _interopRequireDefault(_concatStream);
 
+var _path = require('path');
+
+var _path2 = _interopRequireDefault(_path);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-var argv = _yargs2.default.usage('Pipe $0 onto a JSON source from the commandline to parse the output:\n  cat data.json | $0 [options] [query]').options({
+var argv = _yargs2.default.usage('Pipe $0 onto a JSON source from the commandline to parse the output:\n  cat data.json | $0 [options] query').options({
   p: {
     alias: 'path',
     describe: 'Use JSON Path notation (https://github.com/dchester/jsonpath)'
@@ -74,16 +78,15 @@ var argv = _yargs2.default.usage('Pipe $0 onto a JSON source from the commandlin
 var format = argv.human ? function (x) {
   return x;
 } : _lodash2.default.partialRight(JSON.stringify, null, argv.indent || 2);
+
 var log = argv.human ? _lodash2.default.partialRight(console.dir.bind(console), {
   colors: !argv.noColor,
   breakLength: argv.break || null,
   depth: argv.depth >= 0 ? argv.depth : null
 }) : console.log.bind(console);
 
-if (!process.stdin.isTTY) {
-  process.stdin.pipe((0, _utf8Stream2.default)()).pipe((0, _mapStream2.default)(function (buf, cb) {
-    return cb(null, buf.toString());
-  })).pipe((0, _concatStream2.default)(function (buf) {
+var parse = function parse(stream) {
+  stream.pipe((0, _utf8Stream2.default)()).pipe((0, _concatStream2.default)(function (buf) {
     var obj = JSON.parse(buf.toString());
 
     if (argv.keys) {
@@ -94,6 +97,23 @@ if (!process.stdin.isTTY) {
       log(format(_lodash2.default.get(obj, argv._[0])));
     }
   }));
+};
+
+var exitWithError = function exitWithError() {
+  console.error('ERROR: ' + process.argv[1].split(_path2.default.sep).pop() + ' requires query argument');
+  process.exit(1);
+};
+
+if (!argv._[0]) {
+  if (!process.stdin.isTTY) {
+    // hook into process.stdin so process won't exit prematurely
+    process.stdin.pipe((0, _utf8Stream2.default)());
+    process.stdin.on('end', exitWithError);
+  } else {
+    exitWithError();
+  }
+} else if (!process.stdin.isTTY) {
+  parse(process.stdin);
 } else {
   _yargs2.default.showHelp();
 }
