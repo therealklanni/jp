@@ -2,7 +2,7 @@
 
 > A tiny commandline tool for parsing JSON from any source.
 
-Based on the idea behind [jq](https://github.com/stedolan/jq) without the need for compiling. 
+Based on the idea behind [jq](https://github.com/stedolan/jq) without the need for compiling.
 Supports [Lodash .get()](https://lodash.com/docs/4.17.2#get) and [JSONPath](https://github.com/dchester/jsonpath) syntax.
 
 ```
@@ -13,11 +13,12 @@ npm install -g jp-cli
 
 ```
 Pipe jp onto a JSON source from the commandline to parse the output:
-  cat data.json | jp [options] [query]
+  cat data.json | jp [options] query
 
 Options:
   -p, --path      Use JSON Path notation (https://github.com/dchester/jsonpath)
   -k, --keys      Print object keys only                               [boolean]
+  -f, --file      Read input from file                                  [string]
   -i, --indent    Number of spaces for indentation (ignored by --human)
                                                            [number] [default: 2]
   -h, --human     Print human-readable (non-JSON) format               [boolean]
@@ -27,8 +28,7 @@ Options:
   --help          Show help                                            [boolean]
 
 Queries use the Lodash get method by default.
-For more information, see https://github.com/therealklanni/jp
-```
+For more information, see https://github.com/therealklanni/jp```
 
 ### Examples
 

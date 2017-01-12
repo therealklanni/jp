@@ -4,6 +4,7 @@ import jsonpath from 'jsonpath'
 import utf8 from 'utf8-stream'
 import map from 'map-stream'
 import concat from 'concat-stream'
+import fs from 'fs'
 import path from 'path'
 
 const argv = yargs
@@ -18,6 +19,12 @@ const argv = yargs
       alias: 'keys',
       describe: 'Print object keys only',
       type: 'boolean'
+    },
+    f: {
+      alias: 'file',
+      describe: 'Read input from file',
+      requiresArg: true,
+      type: 'string'
     },
     i: {
       alias: 'indent',
@@ -94,6 +101,8 @@ if (!argv._[0]) {
   }
 } else if (!process.stdin.isTTY) {
   parse(process.stdin)
+} else if (argv.file) {
+  parse(fs.createReadStream(path.resolve(argv.file), 'utf8'))
 } else {
   yargs.showHelp()
 }

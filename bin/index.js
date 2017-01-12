@@ -25,6 +25,10 @@ var _concatStream = require('concat-stream');
 
 var _concatStream2 = _interopRequireDefault(_concatStream);
 
+var _fs = require('fs');
+
+var _fs2 = _interopRequireDefault(_fs);
+
 var _path = require('path');
 
 var _path2 = _interopRequireDefault(_path);
@@ -40,6 +44,12 @@ var argv = _yargs2.default.usage('Pipe $0 onto a JSON source from the commandlin
     alias: 'keys',
     describe: 'Print object keys only',
     type: 'boolean'
+  },
+  f: {
+    alias: 'file',
+    describe: 'Read input from file',
+    requiresArg: true,
+    type: 'string'
   },
   i: {
     alias: 'indent',
@@ -114,6 +124,8 @@ if (!argv._[0]) {
   }
 } else if (!process.stdin.isTTY) {
   parse(process.stdin);
+} else if (argv.file) {
+  parse(_fs2.default.createReadStream(_path2.default.resolve(argv.file), 'utf8'));
 } else {
   _yargs2.default.showHelp();
 }
