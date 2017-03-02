@@ -28,23 +28,32 @@ Options:
   --help          Show help                                            [boolean]
 
 Queries use the Lodash get method by default.
-For more information, see https://github.com/therealklanni/jp```
+For more information, see https://github.com/therealklanni/jp
+```
 
 ### Examples
 
-```
-$ cat user-response.json | jp data.user
+
+> $ cat user-response.json | jp data.user
+
+```js
 {
   "name": "Gazorpazorpfield"
   "color": "orange"
 }
+```
 
-$ cat user-response.json | jp data.user | jp --keys
+> $ cat user-response.json | jp data.user | jp --keys
+
+```js
 [
   "name",
   "color"
 ]
+```
 
-$ cat user-response.json | jp data.user.name
+> $ cat user-response.json | jp data.user.name
+
+```js
 "Gazorpazorpfield"
 ```
