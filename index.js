@@ -13,7 +13,8 @@ const argv = yargs
   .options({
     p: {
       alias: 'path',
-      describe: 'Use JSON Path notation (https://github.com/dchester/jsonpath)'
+      describe: 'Use JSON Path notation (https://github.com/dchester/jsonpath)',
+      type: 'boolean'
     },
     k: {
       alias: 'keys',
@@ -79,7 +80,7 @@ const parse = (stream) => {
       if (argv.keys) {
         log(format(Object.keys(obj)))
       } else if (argv.path) {
-        log(format(jsonpath.query(obj, argv._[0] || argv.path)))
+        log(format(jsonpath.query(obj, argv._[0])))
       } else {
         log(format(_.get(obj, argv._[0])))
       }
