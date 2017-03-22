@@ -38,7 +38,8 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 var argv = _yargs2.default.usage('Pipe $0 onto a JSON source from the commandline to parse the output:\n  cat data.json | $0 [options] query').options({
   p: {
     alias: 'path',
-    describe: 'Use JSON Path notation (https://github.com/dchester/jsonpath)'
+    describe: 'Use JSON Path notation (https://github.com/dchester/jsonpath)',
+    type: 'boolean'
   },
   k: {
     alias: 'keys',
@@ -102,7 +103,7 @@ var parse = function parse(stream) {
     if (argv.keys) {
       log(format(Object.keys(obj)));
     } else if (argv.path) {
-      log(format(_jsonpath2.default.query(obj, argv._[0] || argv.path)));
+      log(format(_jsonpath2.default.query(obj, argv._[0])));
     } else {
       log(format(_lodash2.default.get(obj, argv._[0])));
     }
