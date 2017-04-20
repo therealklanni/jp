@@ -1,3 +1,7 @@
+[![npm](https://img.shields.io/npm/v/jp-cli.svg)](https://www.npmjs.com/package/jp-cli)
+[![prettier](https://img.shields.io/badge/style-prettier-ff69b4.svg)](https://github.com/prettier/prettier)
+[![Beerpay](https://img.shields.io/beerpay/hashdog/scrapfy-chrome-extension.svg)](https://beerpay.io/therealklanni/jp)
+
 # jp
 
 > A tiny commandline tool for parsing JSON from any source.
