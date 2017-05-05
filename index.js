@@ -3,6 +3,7 @@ import yargs from 'yargs';
 import jsonpath from 'jsonpath';
 import utf8 from 'utf8-stream';
 import map from 'map-stream';
+import split from 'split';
 import concat from 'concat-stream';
 import fs from 'fs';
 import path from 'path';
@@ -14,50 +15,55 @@ const argv = yargs
   )
   .options({
     p: {
-      alias: 'path',
-      describe: 'Use JSON Path notation (https://github.com/dchester/jsonpath)',
-      type: 'boolean'
+      alias: `path`,
+      describe: `Use JSON Path notation (https://github.com/dchester/jsonpath)`,
+      type: `boolean`
     },
     k: {
-      alias: 'keys',
-      describe: 'Print object keys only',
-      type: 'boolean'
+      alias: `keys`,
+      describe: `Print object keys only`,
+      type: `boolean`
     },
     f: {
-      alias: 'file',
-      describe: 'Read input from file',
+      alias: `file`,
+      describe: `Read input from file`,
       requiresArg: true,
-      type: 'string'
+      type: `string`
     },
     i: {
-      alias: 'indent',
-      describe: 'Number of spaces for indentation (ignored by --human)',
+      alias: `indent`,
+      describe: `Number of spaces for indentation (ignored by --human)`,
       requiresArg: true,
       default: 2,
-      type: 'number',
-      coerce: x => (!isNaN(parseFloat(x)) && isFinite(x) ? +x : x)
+      type: `number`,
+      coerce: x => (!isNaN(parseFloat(x)) && isFinite(x) ? Number(x) : x)
     },
     h: {
-      alias: 'human',
-      describe: 'Print human-readable (non-JSON) format',
-      type: 'boolean'
+      alias: `human`,
+      describe: `Print human-readable (non-JSON) format`,
+      type: `boolean`
     },
     b: {
-      alias: 'break',
-      describe: 'Set break length of object/array for human format',
+      alias: `break`,
+      describe: `Set break length of object/array for human format`,
       requiresArg: true,
-      type: 'number'
+      type: `number`
     },
     c: {
-      alias: 'no-color',
-      describe: 'Disable color for human format',
-      type: 'boolean'
+      alias: `no-color`,
+      describe: `Disable color for human format`,
+      type: `boolean`
     },
     d: {
-      alias: 'depth',
-      describe: 'Depth for human format',
+      alias: `depth`,
+      describe: `Depth for human format`,
       requiresArg: true,
-      type: 'number'
+      type: `number`
+    },
+    L: {
+      alias: `line-by-line`,
+      describe: `Parse each line as a separate input`,
+      type: `boolean`
     }
   })
   .help()
@@ -66,43 +72,46 @@ const argv = yargs
 For more information, see https://github.com/therealklanni/jp`
   ).argv;
 
-const format = argv.human
-  ? x => x
-  : _.partialRight(JSON.stringify, null, argv.indent || 2);
+const format = argv.human ? x => x : _.partialRight(JSON.stringify, null, argv.indent || 2);
+
+const logOpts = {
+  colors: !argv.noColor,
+  breakLength: argv.break || null,
+  depth: argv.depth >= 0 ? argv.depth : null
+};
 
 const log = argv.human
-  ? _.partialRight(console.dir.bind(console), {
-      colors: !argv.noColor,
-      breakLength: argv.break || null,
-      depth: argv.depth >= 0 ? argv.depth : null
-    })
+  ? _.partialRight(console.dir.bind(console), logOpts)
   : console.log.bind(console);
 
 const print = _.flow(format, log);
 
 const query = argv._[0];
 
-const parse = stream => {
-  stream.pipe(utf8()).pipe(
-    concat(buf => {
-      const obj = JSON.parse(buf.toString());
-      let output;
+const parseBuf = buf => {
+  const obj = JSON.parse(buf.toString());
+  let output;
 
-      if (argv.path) {
-        output = query ? jsonpath.query(obj, query) : obj;
-      } else {
-        output = query ? _.get(obj, query) : obj;
-      }
+  if (argv.path) {
+    output = query ? jsonpath.query(obj, query) : obj;
+  } else {
+    output = query ? _.get(obj, query) : obj;
+  }
 
-      print(argv.keys ? Object.keys(output) : output);
-    })
-  );
+  print(argv.keys ? Object.keys(output) : output);
 };
+
+const parse = stream =>
+  stream
+    .pipe(utf8())
+    // Use utf8 effectively as a noop
+    .pipe(argv.L ? split() : utf8())
+    .pipe(argv.L ? map(parseBuf) : concat(parseBuf));
 
 if (!process.stdin.isTTY) {
   parse(process.stdin);
 } else if (argv.file) {
-  parse(fs.createReadStream(path.resolve(argv.file), 'utf8'));
+  parse(fs.createReadStream(path.resolve(argv.file), `utf8`));
 } else {
   yargs.showHelp();
 }

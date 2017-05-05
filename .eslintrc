@@ -1,0 +1,68 @@
+{
+  "extends": [
+    "eslint:recommended",
+    "prettier"
+  ],
+  "plugins": [
+    "prettier"
+  ],
+  "parserOptions": {
+    "ecmaVersion": 2016,
+    "sourceType": "module"
+  },
+  "env": {
+    "es6": true,
+    "node": true,
+    "mocha": true
+  },
+  "rules": {
+    "prettier/prettier": ["error", { "singleQuote": true, "printWidth": 100 }],
+    "arrow-body-style": ["error", "as-needed"],
+    "arrow-parens": ["error", "as-needed"],
+    "arrow-spacing": ["error"],
+    "brace-style": ["error", "1tbs"],
+    "curly": ["error", "all"],
+    "dot-notation": ["error", { "allowPattern": "^[a-z]+(_[a-z]+)+$" }],
+    "eol-last": ["error", "always"],
+    "eqeqeq": ["error", "smart"],
+    "generator-star-spacing": ["error"],
+    "handle-callback-err": [0],
+    "indent": ["error", 2],
+    "lines-around-directive": ["error", { "before": "never", "after": "always" }],
+    "max-len": [1, { "code": 100, "ignoreUrls": true }],
+    "new-cap": [0],
+    "newline-after-var": ["error", "always"],
+    "newline-before-return": ["error"],
+    "no-console": [1],
+    "no-else-return": ["error"],
+    "no-extra-bind": ["error"],
+    "no-extra-label": ["error"],
+    "no-floating-decimal": ["error"],
+    "no-implicit-coercion": ["error", { "allow": ["!!"] }],
+    "no-lonely-if": ["error"],
+    "no-undef-init": ["error"],
+    "no-unneeded-ternary": ["error"],
+    "no-useless-computed-key": ["error"],
+    "no-useless-rename": ["error"],
+    "no-useless-return": ["error"],
+    "no-var": ["error"],
+    "nonblock-statement-body-position": ["error", "below"],
+    "object-curly-spacing": ["error", "always"],
+    "object-property-newline": ["error"],
+    "object-shorthand": ["error"],
+    "prefer-arrow-callback": ["error"],
+    "prefer-const": ["error"],
+    "prefer-spread": ["error"],
+    "prefer-template": ["error"],
+    "quotes": ["error", "backtick", { "avoidEscape": true }],
+    "require-jsdoc": [0],
+    "rest-spread-spacing": ["error"],
+    "spaced-comment": ["error", "always"],
+    "template-curly-spacing": ["error"],
+    "valid-jsdoc": [0],
+    "wrap-iife": ["error", "inside"],
+    "wrap-regex": ["error"],
+    "yield-star-spacing": ["error"],
+    "yoda": ["error", "never"]
+  }
+}
