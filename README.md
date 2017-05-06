@@ -29,6 +29,7 @@ Options:
   -b, --break     Set break length of object/array for human format     [number]
   -c, --no-color  Disable color for human format                       [boolean]
   -d, --depth     Depth for human format                                [number]
+  -L, --line-by-line  Parse each line as a separate input              [boolean]
   --help          Show help                                            [boolean]
 
 Queries use the Lodash get method by default.
@@ -60,4 +61,20 @@ For more information, see https://github.com/therealklanni/jp
 
 ```js
 "Gazorpazorpfield"
+```
+
+jp can also parse JSON line by line from an input
+
+> $ [ipfs](https://github.com/ipfs/ipfs) log tail | jp -Lh event
+
+```js
+'updatePeer'
+'handleFindPeerBegin'
+'handleFindPeer'
+'updatePeer'
+'handleFindPeerBegin'
+'handleFindPeer'
+'Bitswap.Rebroadcast.active'
+'Bitswap.Rebroadcast.idle'
+... until you ^C
 ```
