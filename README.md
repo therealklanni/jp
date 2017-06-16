@@ -1,16 +1,19 @@
+[![GitHub license](https://img.shields.io/badge/license-MIT-blue.svg)](https://raw.githubusercontent.com/therealklanni/jp-cli/master/LICENSE)
+[![Build Status](https://img.shields.io/travis/therealklanni/jp-cli.svg)](https://travis-ci.org/therealklanni/jp-cli)
 [![npm](https://img.shields.io/npm/v/jp-cli.svg)](https://www.npmjs.com/package/jp-cli)
-[![prettier](https://img.shields.io/badge/style-prettier-ff69b4.svg)](https://github.com/prettier/prettier)
+[![Prettier](https://img.shields.io/badge/style-prettier-ff69b4.svg)](https://github.com/prettier/prettier)
 [![Beerpay](https://img.shields.io/beerpay/therealklanni/jp.svg)](https://beerpay.io/therealklanni/jp)
 
 # jp
 
-> A tiny commandline tool for parsing JSON from any source.
+> Simply parse JSON from any input source.
 
-Based on the idea behind [jq](https://github.com/stedolan/jq) without the need for compiling.
-Supports [Lodash .get()](https://lodash.com/docs/4.17.2#get) and [JSONPath](https://github.com/dchester/jsonpath) syntax.
+_Inspired by_ [jq](https://github.com/stedolan/jq); not a replacement.
+Supports [Lodash .get() path syntax](https://lodash.com/docs/#get) and [JSONPath syntax](https://github.com/dchester/jsonpath).
+Also supports stdin streaming (see last example), i.e. line-by-line.
 
 ```
-npm install -g jp-cli
+yarn global add jp-cli || npm install -g jp-cli
 ```
 
 ## Usage
@@ -63,18 +66,22 @@ For more information, see https://github.com/therealklanni/jp
 "Gazorpazorpfield"
 ```
 
-jp can also parse JSON line by line from an input
+`jp` can also parse JSON line-by-line from a stdin stream.
 
-> $ [ipfs](https://github.com/ipfs/ipfs) log tail | jp -Lh event
+> $ [ipfs](https://github.com/ipfs/ipfs) log tail | jp -L event | jq -r
 
 ```js
-'updatePeer'
-'handleFindPeerBegin'
-'handleFindPeer'
-'updatePeer'
-'handleFindPeerBegin'
-'handleFindPeer'
-'Bitswap.Rebroadcast.active'
-'Bitswap.Rebroadcast.idle'
+updatePeer
+handleFindPeerBegin
+handleFindPeer
+updatePeer
+handleFindPeerBegin
+handleFindPeer
+Bitswap.Rebroadcast.active
+Bitswap.Rebroadcast.idle
 ... until you ^C
 ```
+
+#### License
+
+MIT © [therealklanni](https://github.com/therealklanni)
