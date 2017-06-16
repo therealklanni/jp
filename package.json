@@ -4,7 +4,7 @@
   "description": "Parse JSON on the commandline",
   "main": "index.js",
   "bin": {
-    "jp": "bin/index.js"
+    "jp": "index.js"
   },
   "repository": {
     "type": "git",
@@ -14,7 +14,7 @@
     "build": "echo '#!/usr/bin/env node' > ./bin/index.js && babel --presets=es2015 index.js >> ./bin/index.js",
     "precommit": "lint-staged",
     "lint:fix": "eslint --fix --quiet --",
-    "test": "cat package.json | node bin/index.js -hd0",
+    "test": "cat package.json | node index.js -hd0",
     "watch": "babel index.js --watch index.js --out-dir bin"
   },
   "keywords": [
@@ -35,8 +35,6 @@
     "yargs": "^6.5.0"
   },
   "devDependencies": {
-    "babel-cli": "^6.18.0",
-    "babel-preset-es2015": "^6.18.0",
     "eslint": "^3.19.0",
     "eslint-config-prettier": "^1.7.0",
     "eslint-plugin-prettier": "^2.0.1",

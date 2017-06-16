@@ -1,12 +1,12 @@
-import _ from 'lodash'
-import yargs from 'yargs'
-import jsonpath from 'jsonpath'
-import utf8 from 'utf8-stream'
-import map from 'map-stream'
-import split from 'split'
-import concat from 'concat-stream'
-import fs from 'fs'
-import path from 'path'
+const _ = require(`lodash`)
+const yargs = require(`yargs`)
+const jsonpath = require(`jsonpath`)
+const utf8 = require(`utf8-stream`)
+const map = require(`map-stream`)
+const split = require(`split`)
+const concat = require(`concat-stream`)
+const fs = require(`fs`)
+const path = require(`path`)
 
 const argv = yargs
   .usage(
