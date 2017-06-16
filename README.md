@@ -2,7 +2,6 @@
 [![Build Status](https://img.shields.io/travis/therealklanni/jp-cli.svg)](https://travis-ci.org/therealklanni/jp-cli)
 [![npm](https://img.shields.io/npm/v/jp-cli.svg)](https://www.npmjs.com/package/jp-cli)
 [![Prettier](https://img.shields.io/badge/style-prettier-ff69b4.svg)](https://github.com/prettier/prettier)
-[![Beerpay](https://img.shields.io/beerpay/therealklanni/jp.svg)](https://beerpay.io/therealklanni/jp)
 
 # jp
 
