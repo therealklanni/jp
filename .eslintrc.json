@@ -16,7 +16,7 @@
     "mocha": true
   },
   "rules": {
-    "prettier/prettier": ["error", { "singleQuote": true, "printWidth": 100 }],
+    "prettier/prettier": ["error", { "singleQuote": true, "printWidth": 100, "semi": false }],
     "arrow-body-style": ["error", "as-needed"],
     "arrow-parens": ["error", "as-needed"],
     "arrow-spacing": ["error"],
@@ -57,6 +57,7 @@
     "quotes": ["error", "backtick", { "avoidEscape": true }],
     "require-jsdoc": [0],
     "rest-spread-spacing": ["error"],
+    "semi": ["error", "never"],
     "spaced-comment": ["error", "always"],
     "template-curly-spacing": ["error"],
     "valid-jsdoc": [0],

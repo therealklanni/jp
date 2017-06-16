@@ -1,12 +1,12 @@
-import _ from 'lodash';
-import yargs from 'yargs';
-import jsonpath from 'jsonpath';
-import utf8 from 'utf8-stream';
-import map from 'map-stream';
-import split from 'split';
-import concat from 'concat-stream';
-import fs from 'fs';
-import path from 'path';
+import _ from 'lodash'
+import yargs from 'yargs'
+import jsonpath from 'jsonpath'
+import utf8 from 'utf8-stream'
+import map from 'map-stream'
+import split from 'split'
+import concat from 'concat-stream'
+import fs from 'fs'
+import path from 'path'
 
 const argv = yargs
   .usage(
@@ -70,48 +70,50 @@ const argv = yargs
   .epilogue(
     `Queries use the Lodash get method by default.
 For more information, see https://github.com/therealklanni/jp`
-  ).argv;
+  ).argv
 
-const format = argv.human ? x => x : _.partialRight(JSON.stringify, null, argv.indent || 2);
+const format = argv.human ? x => x : _.partialRight(JSON.stringify, null, argv.indent || 2)
 
 const logOpts = {
   colors: !argv.noColor,
   breakLength: argv.break || null,
   depth: argv.depth >= 0 ? argv.depth : null
-};
+}
 
+/* eslint-disable no-console */
 const log = argv.human
   ? _.partialRight(console.dir.bind(console), logOpts)
-  : console.log.bind(console);
+  : console.log.bind(console)
+/* eslint-enable no-console */
 
-const print = _.flow(format, log);
+const print = _.flow(format, log)
 
-const query = argv._[0];
+const query = argv._[0]
 
 const parseBuf = buf => {
-  const obj = JSON.parse(buf.toString());
-  let output;
+  const obj = JSON.parse(buf.toString())
+  let output
 
   if (argv.path) {
-    output = query ? jsonpath.query(obj, query) : obj;
+    output = query ? jsonpath.query(obj, query) : obj
   } else {
-    output = query ? _.get(obj, query) : obj;
+    output = query ? _.get(obj, query) : obj
   }
 
-  print(argv.keys ? Object.keys(output) : output);
-};
+  print(argv.keys ? Object.keys(output) : output)
+}
 
 const parse = stream =>
   stream
     .pipe(utf8())
     // Use utf8 effectively as a noop
     .pipe(argv.L ? split() : utf8())
-    .pipe(argv.L ? map(parseBuf) : concat(parseBuf));
+    .pipe(argv.L ? map(parseBuf) : concat(parseBuf))
 
 if (!process.stdin.isTTY) {
-  parse(process.stdin);
+  parse(process.stdin)
 } else if (argv.file) {
-  parse(fs.createReadStream(path.resolve(argv.file), `utf8`));
+  parse(fs.createReadStream(path.resolve(argv.file), `utf8`))
 } else {
-  yargs.showHelp();
+  yargs.showHelp()
 }

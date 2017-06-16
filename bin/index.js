@@ -105,7 +105,9 @@ var logOpts = {
   depth: argv.depth >= 0 ? argv.depth : null
 };
 
+/* eslint-disable no-console */
 var log = argv.human ? _lodash2.default.partialRight(console.dir.bind(console), logOpts) : console.log.bind(console);
+/* eslint-enable no-console */
 
 var print = _lodash2.default.flow(format, log);
 
