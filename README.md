@@ -1,5 +1,5 @@
-[![GitHub license](https://img.shields.io/badge/license-MIT-blue.svg)](https://raw.githubusercontent.com/therealklanni/jp-cli/master/LICENSE)
-[![Build Status](https://img.shields.io/travis/therealklanni/jp-cli.svg)](https://travis-ci.org/therealklanni/jp-cli)
+[![GitHub license](https://img.shields.io/badge/license-MIT-blue.svg)](https://raw.githubusercontent.com/therealklanni/jp/master/LICENSE)
+[![Build Status](https://img.shields.io/travis/therealklanni/jp.svg)](https://travis-ci.org/therealklanni/jp)
 [![npm](https://img.shields.io/npm/v/jp-cli.svg)](https://www.npmjs.com/package/jp-cli)
 [![Prettier](https://img.shields.io/badge/style-prettier-ff69b4.svg)](https://github.com/prettier/prettier)
 
