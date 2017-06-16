@@ -11,11 +11,9 @@
     "url": "https://github.com/therealklanni/jp.git"
   },
   "scripts": {
-    "build": "echo '#!/usr/bin/env node' > ./bin/index.js && babel --presets=es2015 index.js >> ./bin/index.js",
     "precommit": "lint-staged",
     "lint:fix": "eslint --fix --quiet --",
-    "test": "cat package.json | node index.js -hd0",
-    "watch": "babel index.js --watch index.js --out-dir bin"
+    "test": "cat package.json | node index.js -hd0"
   },
   "keywords": [
     "json",
