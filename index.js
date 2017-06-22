@@ -1,3 +1,5 @@
+#!/usr/bin/env node
+
 const _ = require(`lodash`)
 const yargs = require(`yargs`)
 const jsonpath = require(`jsonpath`)
