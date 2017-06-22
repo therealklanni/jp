@@ -10,6 +10,8 @@ const concat = require(`concat-stream`)
 const fs = require(`fs`)
 const path = require(`path`)
 
+const version = require(`./package.json`).version
+
 const argv = yargs
   .usage(
     `Pipe $0 onto a JSON source from the commandline to parse the output:
@@ -66,6 +68,11 @@ const argv = yargs
       alias: `line-by-line`,
       describe: `Parse each line as a separate input`,
       type: `boolean`
+    },
+    v: {
+      alias: `version`,
+      describe: `Print the version`,
+      type: `boolean`
     }
   })
   .help()
@@ -112,7 +119,11 @@ const parse = stream =>
     .pipe(argv.L ? split() : utf8())
     .pipe(argv.L ? map(parseBuf) : concat(parseBuf))
 
-if (!process.stdin.isTTY) {
+if (argv.v) {
+  /* eslint-disable no-console */
+  console.log(`v${version}`)
+  /* eslint-enable no-console */
+} else if (!process.stdin.isTTY) {
   parse(process.stdin)
 } else if (argv.file) {
   parse(fs.createReadStream(path.resolve(argv.file), `utf8`))
