@@ -1,6 +1,6 @@
 {
   "name": "jp-cli",
-  "version": "2.0.1",
+  "version": "2.0.2",
   "description": "Parse JSON on the commandline",
   "main": "index.js",
   "bin": {
