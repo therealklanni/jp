@@ -100,8 +100,27 @@ const print = _.flow(format, log)
 const query = argv._[0]
 
 const parseBuf = buf => {
-  const obj = JSON.parse(buf.toString())
+  let obj
   let output
+
+  try {
+    obj = JSON.parse(buf.toString())
+  } catch (e) {
+    switch (true) {
+      case /Unexpected token/.test(e.toString()):
+        console.log(`Error: Unable to parse input as JSON`)
+        break
+
+      case /Unexpected end/.test(e.toString()):
+        console.log(`Error: Unexpected end of JSON input`)
+        break
+
+      default:
+        console.log(`Error: Unknown parse error`)
+    }
+
+    process.exit(1)
+  }
 
   if (argv.path) {
     output = query ? jsonpath.query(obj, query) : obj

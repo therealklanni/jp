@@ -27,7 +27,6 @@
     "eqeqeq": ["error", "smart"],
     "generator-star-spacing": ["error"],
     "handle-callback-err": [0],
-    "indent": ["error", 2],
     "lines-around-directive": ["error", { "before": "never", "after": "always" }],
     "max-len": [1, { "code": 100, "ignoreUrls": true }],
     "new-cap": [0],
@@ -62,7 +61,6 @@
     "template-curly-spacing": ["error"],
     "valid-jsdoc": [0],
     "wrap-iife": ["error", "inside"],
-    "wrap-regex": ["error"],
     "yield-star-spacing": ["error"],
     "yoda": ["error", "never"]
   }
