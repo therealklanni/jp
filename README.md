@@ -45,7 +45,7 @@ For more information, see https://github.com/therealklanni/jp
 
 ```js
 {
-  "name": "Gazorpazorpfield"
+  "name": "Gazorpazorpfield",
   "color": "orange"
 }
 ```
